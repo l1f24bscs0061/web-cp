@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Cyberpunk & Developer Terminal Portfolio - Full-Stack Developer">
+  <title>FURQAN // Dev Terminal</title>
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Google Fonts: JetBrains Mono & Space Grotesk -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="cyber-theme">
+  <!-- Scanline CRT Effect Overlay -->
+  <div class="crt-overlay" aria-hidden="true"></div>
+
+  <!-- Background Matrix Digital Rain Canvas -->
+  <canvas id="matrixCanvas" class="matrix-canvas"></canvas>
+
+  <!-- Top System Status Bar -->
+  <div class="system-bar">
+    <div class="status-indicator">
+      <span class="pulse-dot"></span>
+      <span class="status-text">SYS_STATUS: ONLINE</span>
+    </div>
+    <div class="sys-metrics">
+      <span class="metric-item"><span class="dim">PORT:</span> 443</span>
+      <span class="metric-item"><span class="dim">NODE:</span> v20.x</span>
+      <span class="metric-item" id="sysClock">00:00:00 UTC</span>
+    </div>
+    <div class="sys-controls">
+      <button id="toggleRainBtn" class="pill-btn" title="Toggle Digital Rain">
+        <span class="icon">⚡</span> Rain: <span id="rainStatusText">ON</span>
+      </button>
+      <button id="toggleCrtBtn" class="pill-btn" title="Toggle CRT Scanline Effect">
+        <span class="icon">📺</span> CRT: <span id="crtStatusText">ON</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Main Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#hero" class="nav-brand">
+        <span class="brand-bracket">[</span>
+        <span class="brand-prompt">&gt;_</span>
+        <span class="brand-name">FURQAN.DEV</span>
+        <span class="brand-bracket">]</span>
+      </a>
+
+      <!-- Mobile Hamburger Toggle -->
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+
+      <ul class="nav-menu" id="navMenu">
+        <li class="nav-item"><a href="#hero" class="nav-link active"><span class="nav-num">01.</span>// home</a></li>
+        <li class="nav-item"><a href="#about" class="nav-link"><span class="nav-num">02.</span>// about</a></li>
+        <li class="nav-item"><a href="#skills" class="nav-link"><span class="nav-num">03.</span>// skills</a></li>
+        <li class="nav-item"><a href="#projects" class="nav-link"><span class="nav-num">04.</span>// projects</a></li>
+        <li class="nav-item"><a href="#terminal-section" class="nav-link"><span class="nav-num">05.</span>// cli</a></li>
+        <li class="nav-item"><a href="#contact" class="nav-link"><span class="nav-num">06.</span>// contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <!-- HERO SECTION -->
+    <section id="hero" class="hero-section">
+      <div class="container hero-container">
+        
+        <!-- Left: Intro & Typing Headline -->
+        <div class="hero-content">
+          <div class="terminal-badge">
+            <span class="badge-tag">SECURITY_CLEARANCE: LEVEL_4</span>
+            <span class="badge-branch">git:(main)</span>
+          </div>
+
+          <h1 class="hero-title">
+            <span class="title-sub">HELLO WORLD, I AM</span>
+            <span class="title-main glitch-text" data-text="Furqan Ahmad">Furqan Ahmad</span>
+          </h1>
+
+          <div class="typewriter-box">
+            <span class="cli-prompt">&gt; role:</span>
+            <span class="typewriter-text" id="typewriterText"></span>
+            <span class="cursor">_</span>
+          </div>
+
+          <p class="hero-description">
+            Building high-performance web applications, resilient systems, and interactive digital interfaces with cutting-edge front-end engineering and clean architectures.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#projects" class="cyber-btn primary">
+              <span class="btn-glitch"></span>
+              <span class="btn-text">&gt; EXPLORE_PROJECTS()</span>
+            </a>
+            <a href="#terminal-section" class="cyber-btn secondary">
+              <span class="btn-text">&gt; OPEN_CLI_SHELL</span>
+            </a>
+            <a href="#contact" class="cyber-btn outline">
+              <span class="btn-text">&gt; INITIALIZE_CONTACT</span>
+            </a>
+          </div>
+
+          <!-- Quick Telemetry / Tech Stack Bar -->
+          <div class="quick-stack">
+            <span class="stack-label">PRIMARY_MODULES:</span>
+            <span class="stack-badge">JavaScript (ES6+)</span>
+            <span class="stack-badge">HTML5 / CSS3</span>
+            <span class="stack-badge">Node.js</span>
+            <span class="stack-badge">REST APIs</span>
+            <span class="stack-badge">Git & CI/CD</span>
+          </div>
+        </div>
+
+        <!-- Right: Interactive Live Mini Terminal -->
+        <div class="hero-terminal">
+          <div class="terminal-window">
+            <div class="terminal-header">
+              <div class="terminal-controls">
+                <span class="control-btn close"></span>
+                <span class="control-btn minimize"></span>
+                <span class="control-btn maximize"></span>
+              </div>
+              <div class="terminal-title">bash - session://visitor@furqan-portfolio</div>
+              <div class="terminal-actions">
+                <span class="terminal-mode">zsh 5.9</span>
+              </div>
+            </div>
+            <div class="terminal-body" id="heroTerminalBody">
+              <div class="t-line dim">Session initialized at: <span class="t-time">00:00:00</span></div>
+              <div class="t-line dim">Type <span class="highlight-cyan">'help'</span> to see available commands.</div>
+              <div class="t-line"><span class="prompt-user">visitor@furqan</span>:<span class="prompt-path">~</span>$ <span class="cmd-text">neofetch</span></div>
+              
+              <!-- Neofetch Display -->
+              <div class="neofetch-output">
+                <div class="ascii-logo">
+                  <pre>
+   _____ _    _ _____  
+  |  ___| |  | |  __ \ 
+  | |__ | |  | | |__) |
+  |  __|| |  | |  _  / 
+  | |   | |__| | | \ \ 
+  |_|    \____/|_|  \_\
+                  </pre>
+                </div>
+                <div class="sysinfo-list">
+                  <p><span class="label">OS:</span> CyberOS x86_64 Web Edition</p>
+                  <p><span class="label">Host:</span> Furqan Neural Workstation</p>
+                  <p><span class="label">Uptime:</span> 99.98% / Continuous Learning</p>
+                  <p><span class="label">Packages:</span> HTML5, CSS3, JS, Modern UI</p>
+                  <p><span class="label">Shell:</span> bash interactive v4.2</p>
+                  <p><span class="label">Status:</span> Open to Opportunities</p>
+                </div>
+              </div>
+
+              <!-- Interactive Prompt inside Hero Terminal -->
+              <div class="t-interactive-row">
+                <span class="prompt-user">visitor@furqan</span>:<span class="prompt-path">~</span>$&nbsp;
+                <input type="text" id="heroCliInput" class="t-inline-input" placeholder="try typing 'skills' or 'projects'..." autocomplete="off" spellcheck="false">
+              </div>
+              <div id="heroCliOutput" class="t-command-output"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section id="about" class="section about-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">// MODULE: 02</span>
+          <h2 class="section-title"><span class="title-accent">&gt;</span> cat about_me.json</h2>
+          <p class="section-subtitle">System diagnostics, background profile, and developer philosophy.</p>
+        </div>
+
+        <div class="about-grid">
+          <!-- Code Block Style About Dossier -->
+          <div class="code-card">
+            <div class="code-header">
+              <div class="file-tab active"><span class="icon">📄</span> profile.json</div>
+              <div class="file-tab"><span class="icon">🔒</span> credentials.gpg</div>
+              <div class="window-dot-indicator"><span></span><span></span><span></span></div>
+            </div>
+            <pre class="code-content"><code><span class="json-key">"developer"</span>: {
+  <span class="json-key">"name"</span>: <span class="json-string">"Furqan Ahmad"</span>,
+  <span class="json-key">"title"</span>: <span class="json-string">"Full-Stack Web Developer & UI Engineer"</span>,
+  <span class="json-key">"location"</span>: <span class="json-string">"Remote / Global"</span>,
+  <span class="json-key">"focus_areas"</span>: [
+    <span class="json-string">"Modern Web Standards & UI Engineering"</span>,
+    <span class="json-string">"Responsive & Accessible Experiences"</span>,
+    <span class="json-string">"API Integration & Full-Stack Solutions"</span>
+  ],
+  <span class="json-key">"mission_statement"</span>: <span class="json-string">"Transforming ambitious ideas into fluid, secure, and visually striking software."</span>,
+  <span class="json-key">"availability"</span>: <span class="json-string">"Open for Internships, Projects & Collaborative Builds"</span>
+}</code></pre>
+          </div>
+
+          <!-- Quick Stats / Dossier Metrics -->
+          <div class="stats-column">
+            <div class="stat-card">
+              <div class="stat-icon">💻</div>
+              <div class="stat-number" data-target="15">15+</div>
+              <div class="stat-label">Projects Completed</div>
+              <p class="stat-desc">From responsive SPAs to API-backed tools</p>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon">⚡</div>
+              <div class="stat-number" data-target="99">99%</div>
+              <div class="stat-label">Performance Score</div>
+              <p class="stat-desc">Optimized asset delivery and clean code</p>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon">☕</div>
+              <div class="stat-number" data-target="500">500+</div>
+              <div class="stat-label">Git Commits</div>
+              <p class="stat-desc">Consistent progress and iterative architecture</p>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon">🛡️</div>
+              <div class="stat-number" data-target="100">100%</div>
+              <div class="stat-label">Responsive Layout</div>
+              <p class="stat-desc">Seamless display across desktop, tablet, and mobile</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- System Architecture Highlights -->
+        <div class="features-row">
+          <div class="feature-item">
+            <div class="feature-header">
+              <span class="feature-index">01</span>
+              <h3>Performance First</h3>
+            </div>
+            <p>Every script and style is handcrafted with low memory footprint, zero bloat, and lightning-fast load times.</p>
+          </div>
+
+          <div class="feature-item">
+            <div class="feature-header">
+              <span class="feature-index">02</span>
+              <h3>Modern Web Standards</h3>
+            </div>
+            <p>Built with semantic HTML5 markup, WCAG accessibility principles, and clean CSS flexbox/grid architectures.</p>
+          </div>
+
+          <div class="feature-item">
+            <div class="feature-header">
+              <span class="feature-index">03</span>
+              <h3>User-Centric Cyberpunk UI</h3>
+            </div>
+            <p>Balancing immersive retro-futuristic visuals with frictionless usability and intuitive navigation patterns.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SKILLS MATRIX SECTION -->
+    <section id="skills" class="section skills-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">// MODULE: 03</span>
+          <h2 class="section-title"><span class="title-accent">&gt;</span> ls -la /skills/capabilities</h2>
+          <p class="section-subtitle">Verified technical proficiencies and system engineering tools.</p>
+        </div>
+
+        <!-- Filter Buttons -->
+        <div class="skills-filter">
+          <button class="filter-btn active" data-filter="all">&gt; ALL_MODULES</button>
+          <button class="filter-btn" data-filter="frontend">&gt; FRONTEND</button>
+          <button class="filter-btn" data-filter="backend">&gt; BACKEND &amp; DB</button>
+          <button class="filter-btn" data-filter="tools">&gt; TOOLS &amp; PROTOCOLS</button>
+        </div>
+
+        <!-- Skills Grid with Cyberpunk Meters -->
+        <div class="skills-grid" id="skillsGrid">
+          
+          <!-- Frontend -->
+          <div class="skill-card" data-category="frontend">
+            <div class="skill-top">
+              <span class="skill-name">HTML5 / Semantic UI</span>
+              <span class="skill-pct">95%</span>
+            </div>
+            <div class="skill-bar-container">
+              <div class="skill-bar-fill" style="width: 95%;"></div>
+            </div>
+            <div class="skill-tags">
+              <span>Web Standards</span>
+              <span>Accessibility (a11y)</span>
+              <span>SEO</span>
+            </div>
+          </div>
+
+          <div class="skill-card" data-category="frontend">
+            <div class="skill-top">
+              <span class="skill-name">CSS3 / Grid &amp; Flexbox</span>
+              <span class="skill-pct">92%</span>
+            </div>
+            <div class="skill-bar-container">
+              <div class="skill-bar-fill" style="width: 92%;"></div>
+            </div>
+            <div class="skill-tags">
+              <span>Animations</span>
+              <span>Custom Variables</span>
+              <span>Responsive Design</span>
+            </div>
+          </div>
+
+          <div class="skill-card" data-category="frontend">
+            <div class="skill-top">
+              <span class="skill-name">JavaScript (ES6+)</span>
+              <span class="skill-pct">88%</span>
+            </div>
+            <div class="skill-bar-container">
+              <div class="skill-bar-fill" style="width: 88%;"></div>
+            </div>
+            <div class="skill-tags">
+              <span>Async / Await</span>
+              <span>DOM Manipulation</span>
+              <span>Fetch API</span>
+            </div>
+          </div>
+
+          <div class="skill-card" data-category="frontend">
+            <div class="skill-top">
+              <span class="skill-name">Responsive &amp; Mobile UI</span>
+              <span class="skill-pct">90%</span>
+            </div>
+            <div class="skill-bar-container">
+              <div class="skill-bar-fill" style="width: 90%;"></div>
+            </div>
+            <div class="skill-tags">
+              <span>Media Queries</span>
+              <span>Mobile-First</span>
+              <span>Touch Gestures</span>
+            </div>
+          </div>
+
+          <!-- Backend & Database -->
+          <div class="skill-card" data-category="backend">
+            <div class="skill-top">
+              <span class="skill-name">Node.js / Express</span>
+              <span class="skill-pct">82%</span>
+            </div>
+            <div class="skill-bar-container">
+              <div class="skill-bar-fill" style="width: 82%;"></div>
+            </div>
+            <div class="skill-tags">
+              <span>REST Services</span>
+              <span>Middleware</span>
+              <span>Event Loop</span>
+            </div>
+          </div>
+
+          <div class="skill-card" data-category="backend">
+            <div class="skill-top">
+              <span class="skill-name">SQL &amp; Relational DBs</span>
+              <span class="skill-pct">80%</span>
+            </div>
+            <div class="skill-bar-container">
+              <div class="skill-bar-fill" style="width: 80%;"></div>
+            </div>
+            <div class="skill-tags">
+              <span>PostgreSQL</span>
+              <span>MySQL</span>
+              <span>Schema Design</span>
+            </div>
+          </div>
+
+          <div class="skill-card" data-category="backend">
+            <div class="skill-top">
+              <span class="skill-name">RESTful APIs &amp; JSON</span>
+              <span class="skill-pct">87%</span>
+            </div>
+            <div class="skill-bar-container">
+              <div class="skill-bar-fill" style="width: 87%;"></div>
+            </div>
+            <div class="skill-tags">
+              <span>Endpoint Design</span>
+              <span>Auth (JWT)</span>
+              <span>CRUD</span>
+            </div>
+          </div>
+
+          <!-- Tools -->
+          <div class="skill-card" data-category="tools">
+            <div class="skill-top">
+              <span class="skill-name">Git &amp; GitHub</span>
+              <span class="skill-pct">90%</span>
+            </div>
+            <div class="skill-bar-container">
+              <div class="skill-bar-fill" style="width: 90%;"></div>
+            </div>
+            <div class="skill-tags">
+              <span>Branching Strategies</span>
+              <span>Code Reviews</span>
+              <span>CI/CD</span>
+            </div>
+          </div>
+
+          <div class="skill-card" data-category="tools">
+            <div class="skill-top">
+              <span class="skill-name">Linux / Bash Scripting</span>
+              <span class="skill-pct">85%</span>
+            </div>
+            <div class="skill-bar-container">
+              <div class="skill-bar-fill" style="width: 85%;"></div>
+            </div>
+            <div class="skill-tags">
+              <span>CLI Automation</span>
+              <span>SSH</span>
+              <span>Vim / Nano</span>
+            </div>
+          </div>
+
+          <div class="skill-card" data-category="tools">
+            <div class="skill-top">
+              <span class="skill-name">Chrome DevTools &amp; Debugging</span>
+              <span class="skill-pct">88%</span>
+            </div>
+            <div class="skill-bar-container">
+              <div class="skill-bar-fill" style="width: 88%;"></div>
+            </div>
+            <div class="skill-tags">
+              <span>Network Audit</span>
+              <span>Performance Profiling</span>
+              <span>Lighthouse</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS SHOWCASE SECTION -->
+    <section id="projects" class="section projects-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">// MODULE: 04</span>
+          <h2 class="section-title"><span class="title-accent">&gt;</span> find ./projects -type feat</h2>
+          <p class="section-subtitle">Featured assignments, applications, and system utilities.</p>
+        </div>
+
+        <div class="projects-grid">
+          
+          <!-- Project 1 -->
+          <article class="project-card">
+            <div class="project-card-header">
+              <div class="project-status">
+                <span class="status-badge live">● DEPLOYED</span>
+                <span class="project-id">#PRJ-01</span>
+              </div>
+              <div class="project-links">
+                <a href="https://github.com" target="_blank" rel="noopener" class="icon-link" title="Source Code">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                </a>
+                <a href="#hero" class="icon-link" title="Live Preview">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                </a>
+              </div>
+            </div>
+
+            <div class="project-body">
+              <h3 class="project-title">CyberSentinel // Network Monitor</h3>
+              <p class="project-summary">
+                A client-side network telemetry and diagnostic dashboard featuring real-time ping simulation, packet stream visualizations, and latency heatmaps.
+              </p>
+              
+              <div class="project-snippet">
+                <code>$ sentinel.watch(--port=443) -&gt; 0 packet drops</code>
+              </div>
+
+              <div class="project-tags">
+                <span>HTML5 Canvas</span>
+                <span>Vanilla JS</span>
+                <span>CSS Grid</span>
+                <span>WebSockets API</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 2 -->
+          <article class="project-card">
+            <div class="project-card-header">
+              <div class="project-status">
+                <span class="status-badge live">● DEPLOYED</span>
+                <span class="project-id">#PRJ-02</span>
+              </div>
+              <div class="project-links">
+                <a href="https://github.com" target="_blank" rel="noopener" class="icon-link" title="Source Code">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                </a>
+                <a href="#hero" class="icon-link" title="Live Preview">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                </a>
+              </div>
+            </div>
+
+            <div class="project-body">
+              <h3 class="project-title">Nexus // E-Commerce Storefront</h3>
+              <p class="project-summary">
+                A modern responsive e-commerce interface equipped with instant multi-criteria filtering, local storage shopping cart, voucher code validation, and modal checkout.
+              </p>
+              
+              <div class="project-snippet">
+                <code>$ cart.checkout({ items: 3, total: "$149.00" })</code>
+              </div>
+
+              <div class="project-tags">
+                <span>JavaScript</span>
+                <span>LocalStorage</span>
+                <span>Flexbox</span>
+                <span>Modular Architecture</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 3 -->
+          <article class="project-card">
+            <div class="project-card-header">
+              <div class="project-status">
+                <span class="status-badge beta">● ACTIVE DEV</span>
+                <span class="project-id">#PRJ-03</span>
+              </div>
+              <div class="project-links">
+                <a href="https://github.com" target="_blank" rel="noopener" class="icon-link" title="Source Code">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                </a>
+                <a href="#hero" class="icon-link" title="Live Preview">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                </a>
+              </div>
+            </div>
+
+            <div class="project-body">
+              <h3 class="project-title">DevLog // Markdown Knowledge Base</h3>
+              <p class="project-summary">
+                A lightweight browser-based technical notebook supporting instant markdown compilation, syntax highlighting, tag taxonomies, and export to PDF.
+              </p>
+              
+              <div class="project-snippet">
+                <code>$ md.parse("# Quick Dev Notes") -&gt; compiled</code>
+              </div>
+
+              <div class="project-tags">
+                <span>HTML5 / CSS3</span>
+                <span>RegEx Engine</span>
+                <span>IndexedDB</span>
+                <span>DOMPurify</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 4 -->
+          <article class="project-card">
+            <div class="project-card-header">
+              <div class="project-status">
+                <span class="status-badge live">● DEPLOYED</span>
+                <span class="project-id">#PRJ-04</span>
+              </div>
+              <div class="project-links">
+                <a href="https://github.com" target="_blank" rel="noopener" class="icon-link" title="Source Code">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                </a>
+                <a href="#hero" class="icon-link" title="Live Preview">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                </a>
+              </div>
+            </div>
+
+            <div class="project-body">
+              <h3 class="project-title">WeatherMatrix // Forecast Radar</h3>
+              <p class="project-summary">
+                Global weather radar consuming OpenWeather APIs to render hourly temperature curves, atmospheric UV ratings, and interactive dynamic weather animations.
+              </p>
+              
+              <div class="project-snippet">
+                <code>$ curl api.weather/v2.5/current?loc=auto</code>
+              </div>
+
+              <div class="project-tags">
+                <span>Fetch API</span>
+                <span>Async JS</span>
+                <span>Geolocation</span>
+                <span>CSS Variables</span>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- INTERACTIVE CLI TERMINAL SECTION -->
+    <section id="terminal-section" class="section terminal-cli-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">// MODULE: 05</span>
+          <h2 class="section-title"><span class="title-accent">&gt;</span> interactive_shell.sh</h2>
+          <p class="section-subtitle">A fully operational terminal interface. Type commands to interact with this portfolio.</p>
+        </div>
+
+        <div class="full-terminal-window">
+          <div class="terminal-header">
+            <div class="terminal-controls">
+              <span class="control-btn close"></span>
+              <span class="control-btn minimize"></span>
+              <span class="control-btn maximize"></span>
+            </div>
+            <div class="terminal-title">guest@furqan-portfolio: /usr/bin/zsh</div>
+            <div class="terminal-hint">Type <span class="highlight-cyan">'help'</span> for command listing</div>
+          </div>
+
+          <div class="cli-body" id="mainCliBody">
+            <div class="cli-welcome">
+              <p class="accent-text">⚡ CYBERPUNK TERMINAL INTERACTION ENGINE [v3.4.1]</p>
+              <p class="dim">Type commands below or click the quick command pills to test.</p>
+            </div>
+
+            <!-- Command suggestions pills -->
+            <div class="cli-quick-commands">
+              <span class="dim">QUICK_RUN:</span>
+              <button class="cli-pill" data-cmd="help">help</button>
+              <button class="cli-pill" data-cmd="about">about</button>
+              <button class="cli-pill" data-cmd="skills">skills</button>
+              <button class="cli-pill" data-cmd="projects">projects</button>
+              <button class="cli-pill" data-cmd="contact">contact</button>
+              <button class="cli-pill" data-cmd="matrix">matrix</button>
+              <button class="cli-pill" data-cmd="clear">clear</button>
+            </div>
+
+            <!-- Terminal History / Output Log -->
+            <div id="cliHistory" class="cli-history"></div>
+
+            <!-- Active CLI Input Row -->
+            <form id="cliForm" class="cli-input-form" autocomplete="off">
+              <label for="mainCliInput" class="cli-label">
+                <span class="prompt-user">visitor@furqan</span>:<span class="prompt-path">~/portfolio</span>$&nbsp;
+              </label>
+              <input type="text" id="mainCliInput" class="cli-input-field" placeholder="type command here..." spellcheck="false">
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT FORM SECTION -->
+    <section id="contact" class="section contact-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">// MODULE: 06</span>
+          <h2 class="section-title"><span class="title-accent">&gt;</span> transmit_message.sh</h2>
+          <p class="section-subtitle">Establish an encrypted link or leave an inquiry transmission.</p>
+        </div>
+
+        <div class="contact-wrapper">
+          <!-- Left: Transmission Metadata & Coordinates -->
+          <div class="contact-info">
+            <div class="terminal-box-dossier">
+              <div class="dossier-header">
+                <span class="icon">📡</span> DIRECT_TRANSMISSION_CHANNELS
+              </div>
+              <div class="dossier-body">
+                <div class="contact-channel">
+                  <span class="channel-label">&gt; PROTOCOL: EMAIL</span>
+                  <a href="mailto:furqan.dev@example.com" class="channel-val">furqan.dev@example.com</a>
+                </div>
+                <div class="contact-channel">
+                  <span class="channel-label">&gt; REPOSITORY: GITHUB</span>
+                  <a href="https://github.com" target="_blank" rel="noopener" class="channel-val">github.com/furqan-ahmad</a>
+                </div>
+                <div class="contact-channel">
+                  <span class="channel-label">&gt; NETWORK: LINKEDIN</span>
+                  <a href="https://linkedin.com" target="_blank" rel="noopener" class="channel-val">linkedin.com/in/furqan-ahmad</a>
+                </div>
+                <div class="contact-channel">
+                  <span class="channel-label">&gt; ENCRYPTION: GPG KEY</span>
+                  <span class="channel-val dim">4A28 920E 88B1 F942</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Status Box -->
+            <div class="status-box">
+              <div class="status-radar">
+                <div class="radar-sweep"></div>
+                <span class="radar-center"></span>
+              </div>
+              <div class="status-desc">
+                <h4>ACCEPTING INCOMING COMMUNICATONS</h4>
+                <p>Standard response latency: &lt; 24 standard business hours.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Terminal Transmission Form -->
+          <div class="contact-form-container">
+            <div class="form-terminal-frame">
+              <div class="form-header">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+                <span class="header-label">MESSAGE_TRANSMISSION_PAYLOAD</span>
+              </div>
+              
+              <form id="contactForm" class="cyber-form">
+                <div class="form-group">
+                  <label for="contactName" class="form-label">&gt; SENDER_IDENTITY (--name)</label>
+                  <input type="text" id="contactName" class="cyber-input" placeholder="e.g. John Connor" required>
+                  <span class="input-glow"></span>
+                </div>
+
+                <div class="form-group">
+                  <label for="contactEmail" class="form-label">&gt; RETURN_ADDRESS (--email)</label>
+                  <input type="email" id="contactEmail" class="cyber-input" placeholder="e.g. user@matrix.org" required>
+                  <span class="input-glow"></span>
+                </div>
+
+                <div class="form-group">
+                  <label for="contactSubject" class="form-label">&gt; PACKET_SUBJECT (--subject)</label>
+                  <input type="text" id="contactSubject" class="cyber-input" placeholder="Project Inquiry / Job Opportunity / Collaboration" required>
+                  <span class="input-glow"></span>
+                </div>
+
+                <div class="form-group">
+                  <label for="contactMessage" class="form-label">&gt; PAYLOAD_DATA (--message)</label>
+                  <textarea id="contactMessage" class="cyber-textarea" rows="4" placeholder="Enter transmission body here..." required></textarea>
+                  <span class="input-glow"></span>
+                </div>
+
+                <button type="submit" id="submitBtn" class="cyber-btn primary full-width">
+                  <span class="btn-text">&gt; TRANSMIT_PAYLOAD()</span>
+                </button>
+              </form>
+
+              <!-- Transmission Log Console -->
+              <div id="transmissionConsole" class="transmission-console" aria-live="polite">
+                <div class="console-line dim">// Transmission idle. Awaiting payload dispatch...</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div class="footer-left">
+        <span class="brand-prompt">&gt;_</span>
+        <span>FURQAN AHMAD // DEVELOPER PORTFOLIO</span>
+      </div>
+      <div class="footer-center">
+        <span>HANDCRAFTED WITH SEMANTIC HTML5, CSS3 &amp; VANILLA JS</span>
+      </div>
+      <div class="footer-right">
+        <a href="#hero" class="back-to-top">&and; RETURN_TO_TOP</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
